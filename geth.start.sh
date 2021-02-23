@@ -1,0 +1,1 @@
+geth --dev --rpc --rpcapi 127.0.0.1 --rpcapi="db,eth,net,web3,personal" --mine --miner.etherbase 0x08A66D42737f9c9DE44D051393bDA99cAE4DaC3C --keystore ~/.ethereum/keystore --password ~/password.txt --allow-insecure-unlock console init
