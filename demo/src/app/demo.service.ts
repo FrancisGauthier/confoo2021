@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import Web3 from "web3";
 import {Contract} from "web3-eth-contract";
 import {AbiItem} from "web3-utils";
+import {Participant} from './participant';
 @Injectable()
 export class DemoService {
 
@@ -27,17 +28,36 @@ export class DemoService {
             "type": "uint256"
           }
         ],
-        "name": "Emails",
+        "name": "Participants",
         "outputs": [
           {
             "internalType": "string",
-            "name": "",
+            "name": "prenom",
             "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "nom",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "ville",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "contact",
+            "type": "address"
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -47,17 +67,16 @@ export class DemoService {
             "type": "address"
           }
         ],
-        "name": "Participants",
+        "name": "Participations",
         "outputs": [
           {
-            "internalType": "string",
+            "internalType": "bool",
             "name": "",
-            "type": "string"
+            "type": "bool"
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [],
@@ -70,14 +89,28 @@ export class DemoService {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
           {
             "internalType": "string",
+            "name": "prenom",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "nom",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
             "name": "email",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "ville",
             "type": "string"
           }
         ],
@@ -104,28 +137,47 @@ export class DemoService {
         "name": "getParticipants",
         "outputs": [
           {
-            "internalType": "string[]",
+            "components": [
+              {
+                "internalType": "string",
+                "name": "prenom",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "nom",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "email",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "ville",
+                "type": "string"
+              },
+              {
+                "internalType": "address",
+                "name": "contact",
+                "type": "address"
+              }
+            ],
+            "internalType": "struct Confoo2021.Participant[]",
             "name": "",
-            "type": "string[]"
+            "type": "tuple[]"
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       }
     ];
 
-    this.contract = new this.web3.eth.Contract(abi ,"0x97fb0192265EE5395d6b7124d0A46F308f266B21");
+    this.contract = new this.web3.eth.Contract(abi ,"0x2Eb0D155055b513d629412EE4B188661921FeF24");
     
     this.web3.eth.getAccounts().then((accounts) => this.account = accounts[0]);
    }
-/*
-  public async hello(){
-    console.log(await this.contract.methods.title().call());
-    console.log(await this.web3.eth.getBalance("0x08A66D42737f9c9DE44D051393bDA99cAE4DaC3C"));
-    console.log(await this.contract.methods.Participants("0x08A66D42737f9c9DE44D051393bDA99cAE4DaC3C").call());
-
-  }*/
 
   public async title(): Promise<string>{
     return  this.contract.methods.title().call();
@@ -135,12 +187,11 @@ export class DemoService {
     console.log(await this.contract.methods.updateTitle(title).send({from: this.account}));
   }
 
-  public async addParticipant(email: string): Promise<void>{
-    console.log(await this.contract.methods.addParticipant(email).send({from: this.account}));
+  public async addParticipant(nom: string,prenom: string,email: string,ville: string): Promise<void>{
+    console.log(await this.contract.methods.addParticipant(nom,prenom,email,ville).send({from: this.account}));
   }
 
-
-  public async getParticipants(): Promise<string[]>{
+  public async getParticipants(): Promise<Participant[]>{
     return  this.contract.methods.getParticipants().call();
   }
 }

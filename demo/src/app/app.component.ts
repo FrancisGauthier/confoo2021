@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup } from '@angular/forms';
 import { DemoService } from './demo.service';
-
+import {Participant} from './participant';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,18 +11,23 @@ export class AppComponent implements OnInit {
   title = 'demo';
   public readonly form: FormGroup;
   public readonly newTitle =  new FormControl('');
-  public readonly email =  new FormControl('');
-
-  public Emails :string[] = [];
+  public readonly email =  new FormControl('',);
+  public readonly nom =  new FormControl('');
+  public readonly prenom =  new FormControl('');
+  public readonly ville =  new FormControl('');
+  public Participants :Participant[] = [];
   constructor(public demoService: DemoService){
     this.form = new FormGroup({
-      email: this.email
+      nom: this.nom,
+      email: this.email,
+      prenom: this.prenom,
+      ville: this.ville
     });
   }
   async ngOnInit() {
 
     this.title = await this.demoService.title();
-    this.Emails = await this.demoService.getParticipants();
+    this.Participants = await this.demoService.getParticipants();
 
   }
 
@@ -32,7 +37,7 @@ export class AppComponent implements OnInit {
   }
 
   public async addParticipant(){
-    await this.demoService.addParticipant(this.email.value);
+    await this.demoService.addParticipant(this.prenom.value,this.nom.value,this.email.value,this.ville.value);
     this.ngOnInit();
   }
 }

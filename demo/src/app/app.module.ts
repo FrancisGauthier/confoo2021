@@ -7,6 +7,8 @@ import { DemoService } from "./demo.service";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent
@@ -17,7 +19,10 @@ import {MatCardModule} from '@angular/material/card';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatCardModule
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule
+
   ],
   providers: [DemoService],
   bootstrap: [AppComponent]

@@ -317,17 +317,39 @@
 
 <div class="content" role="main">
 {{ title}}
-<form [formGroup]="form">
-<input [formControl]="email" placeholder="your@email.com"/>
-<button type="button" (click)="addParticipant()">Add</button>
-
 <input [formControl]="newTitle" placeholder="enter new title"/>
+
 <button type="button" (click)="updateTitle()">Save</button>
+<form [formGroup]="form">
+
+<mat-form-field class="input">
+  <mat-label>Prénom</mat-label>
+  <input matInput  [formControl]="prenom">
+</mat-form-field>
+
+<mat-form-field  class="input">
+  <mat-label>Nom</mat-label>
+  <input matInput  [formControl]="nom">
+</mat-form-field>
+
+<mat-form-field  class="input">
+  <mat-label>Email</mat-label>
+  <input matInput  [formControl]="email">
+</mat-form-field>
+
+<mat-form-field  class="input">
+  <mat-label>Ville</mat-label>
+  <input matInput  [formControl]="ville">
+</mat-form-field>
+<button type="button" mat-raised-button color="primary"  (click)="addParticipant()">Ajouter</button>
 </form>
 
 <div class="participants">
-  <div class="participant" *ngFor="let e of Emails">
-    <mat-card >{{e}}</mat-card>
+  <div class="participant" *ngFor="let p of Participants">
+    <mat-card> 
+      <mat-card-header><a href="mailto:{{p.email}}">{{p.prenom}} {{p.nom}} ({{p.ville}})</a></mat-card-header>
+      <mat-card-subtitle>{{p.contact}}</mat-card-subtitle>
+    </mat-card>
 
   </div>
   
